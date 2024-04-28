@@ -1,0 +1,33 @@
+<html lang="ja">
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <py-env>
+            - beautifulsoup4
+        </py-env>
+    </head>
+    <body>
+        <py-config>
+            packages = ["beautifulsoup4","urllib"]
+        </py-config>
+        <py-script>
+            import pyodide
+
+            # Pyodideインスタンスを作成
+            pyodide.load_package(["requests", "beautifulsoup4"])
+            pyodide.open_url("https://pyscript.net/latest/pyscript.js")
+
+            # 検索クエリとエンジンを指定
+            query = "your query here"
+            engine = "bing"  # または他のサポートされているエンジン
+
+            # サーバーにリクエストを送信
+            response = pyodide.eval_py(f'requests.get("http://localhost:5000/search", params={{"query": "{query}", "engine": "{engine}"}})')
+            data = response.json()
+            print(data)
+
+
+        </py-script>
+    </body>
+</html>
